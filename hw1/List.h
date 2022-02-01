@@ -194,14 +194,14 @@ public:
 
     const_iterator end() const
     {
-        return head;
+        return tail;
     }
 
     // Return number of elements currently in the list.
     int size() const
     {
         int s = 0;
-        Node* i = head;
+        Node* i = head->next;
         while (i != tail)
         {
             i = i->next;
@@ -213,24 +213,19 @@ public:
     // Return true if the list is empty, false otherwise.
     bool empty() const
     {
-        if (size() <= 0)
+        /*if (size() <= 0)
         {
             return true;
-        }
+        }*/
         return false;
     }
 
     // Removes all elements from the list
     void clear()
     {
-        //Node* t = head;
-        //for (int i = 1; i < size(); ++i)
-        //{
-        //    t = t->next;
-        //    delete &t;
-        //}
-        /*head->next = tail;
-        tail->prev = head;*/
+        //while()
+        //head->next = tail;
+        //tail->prev = head;
     }
 
     /* front, back, push_front, push_back, pop_front, and pop_back
@@ -251,21 +246,39 @@ public:
     {
         //note: these values need to be replaced, just here for compilation purposes
         return 0;
+
+        //return tail->prev->data;
     }
 
     //Inserts an object at the front of the list
     void push_front(const Object& x)
     {
+        Node* n;/*
+        n->data = x;
+        head->next->prev = n;
+        head->next = n;
+        siz++;*/
     }
 
     //Inserts an object at the back of the list
     void push_back(const Object& x)
     {
+        /*Node* n;
+        n->data = x;
+        head->next->prev = n;
+        head->next = n;
+        ++size;*/
     }
 
     //Removes the first element in the list
     void pop_front()
     {
+        //if (! empty())
+        {
+            //delete head->*next; 
+            //head->next = head->next->next
+            //head->next->prev = head;
+        }
     }
 
     //Removes the last element in the list
@@ -278,6 +291,12 @@ public:
     {
         //need to update the return value, just itr so it will compile
         return itr;
+        /*struct Node* n = new Node;
+        n->data = x;
+        n->next = itr->prev;
+        itr->prev = n;*/
+        
+        
     }
 
     // Erase item at itr.
@@ -297,9 +316,15 @@ public:
 private:
     Node* head;
     Node* tail;
+    int siz;
 
     void init()
     {
+        siz = 0;
+        head = new Node;
+        tail = new Node;
+        head->next = tail;
+        tail->prev = head;
     }
 };
 
