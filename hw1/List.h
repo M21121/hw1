@@ -200,32 +200,28 @@ public:
     // Return number of elements currently in the list.
     int size() const
     {
-        int s = 0;
-        Node* i = head->next;
-        while (i != tail)
-        {
-            i = i->next;
-            ++s;
-        }
-        return s;
+        return siz;
     }
 
     // Return true if the list is empty, false otherwise.
     bool empty() const
     {
-        /*if (size() <= 0)
+        if (size() <= 0)
         {
             return true;
-        }*/
+        }
         return false;
     }
 
     // Removes all elements from the list
     void clear()
     {
-        //while()
-        //head->next = tail;
-        //tail->prev = head;
+        //while (!empty())
+        //{
+        //    pop_front();
+        //}
+        head->next = tail;
+        tail->prev = head;
     }
 
     /* front, back, push_front, push_back, pop_front, and pop_back
@@ -235,55 +231,61 @@ public:
     //Returns the value stored in the first element of the list
     const Object& front() const
     {
-        //note: these values need to be replaced, just here for compilation purposes
-        return 0;
-
-        //return head->next->data;
+        return head->next->data;
     }
 
     //Returns the value stored in the last element of the list
     const Object& back() const
     {
-        //note: these values need to be replaced, just here for compilation purposes
-        return 0;
-
-        //return tail->prev->data;
+        return tail->prev->data;
     }
 
     //Inserts an object at the front of the list
     void push_front(const Object& x)
     {
-        Node* n;/*
+        Node a;
+        Node* n = &a;
         n->data = x;
-        head->next->prev = n;
+        n->next = head->next;
+        n->prev = head;
+        n->next->prev = n;
         head->next = n;
-        siz++;*/
+        siz++;
     }
 
     //Inserts an object at the back of the list
     void push_back(const Object& x)
     {
-        /*Node* n;
+        Node a;
+        Node* n = &a;
         n->data = x;
-        head->next->prev = n;
-        head->next = n;
-        ++size;*/
+        n->next = tail;
+        n->prev = tail->prev;
+        n->prev->next = n;
+        tail->prev = n;
+        siz++;
     }
 
     //Removes the first element in the list
     void pop_front()
     {
-        //if (! empty())
+        if (!empty())
         {
-            //delete head->*next; 
-            //head->next = head->next->next
-            //head->next->prev = head;
+            head->next = head->next->next;
+            head->next->prev = head;
+            siz--;
         }
     }
 
     //Removes the last element in the list
     void pop_back()
     {
+        if (!empty())
+        {
+            tail->prev = tail->prev->prev;
+            tail->prev->next = tail;
+            siz--;
+        }
     }
 
     // Insert x before itr.
@@ -291,12 +293,6 @@ public:
     {
         //need to update the return value, just itr so it will compile
         return itr;
-        /*struct Node* n = new Node;
-        n->data = x;
-        n->next = itr->prev;
-        itr->prev = n;*/
-        
-        
     }
 
     // Erase item at itr.
