@@ -310,7 +310,7 @@ public:
         auto temp = itr->next;
         itr->next->prev = itr->prev;
         itr->prev->next = itr->next;
-        delete itr;
+        //delete itr;
         //WHAT IS THIS SUPPOSED TO RETURN?!
         return temp;
     }
@@ -345,5 +345,5 @@ private:
         tail->prev = head;
     }
 };
-
 #endif
+//My Github Reop: https://github.com/M21121/hw1

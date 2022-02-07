@@ -17,11 +17,13 @@ public:
     }
     Object& dequeue()
     {
-        Object temp = theList.back();
-        theList.pop_back();
-        return temp;
+        //Object temp = theList.back();
+        //theList.pop_back();
+        //return temp
         return *theList.begin();
     }
 private:
     List<Object> theList;
 };
+
+//My Github Reop: https://github.com/M21121/hw1
