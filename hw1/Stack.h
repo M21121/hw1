@@ -17,9 +17,9 @@ public:
     }
     Object& pop()
     {
-        /*auto temp = theList.front();
-        theList.pop_front();
-        return *temp;*/
+        //auto temp = theList.front();
+        //theList.pop_front();
+        //return temp;
         return *theList.begin();
     }
 private:

@@ -13,12 +13,14 @@ public:
     }
     void enqueue(const Object& x)
     {
+        theList.push_front(x);
     }
     Object& dequeue()
     {
-        auto temp = theList.back();
+        Object temp = theList.back();
         theList.pop_back();
         return temp;
+        return *theList.begin();
     }
 private:
     List<Object> theList;
