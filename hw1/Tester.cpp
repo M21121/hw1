@@ -19,7 +19,7 @@ void recordStatus(bool status, int* successes) {
 
 int main()
 {
-    const int N = 100;
+    const int N = 100000;
     std::vector<int> testVals(N);
     List<int> classToTest;
 

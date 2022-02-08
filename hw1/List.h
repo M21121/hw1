@@ -189,12 +189,12 @@ public:
     // Mutator version is first, then accessor version.
     iterator end()
     {
-        return iterator(tail->prev);
+        return iterator(tail);
     }
 
     const_iterator end() const
     {
-        return iterator(tail->prev);
+        return iterator(tail);
     }
 
     // Return number of elements currently in the list.
@@ -212,13 +212,10 @@ public:
     // Removes all elements from the list
     void clear()
     {
-        //while (!empty())
-        //{
-        //    pop_front();
-        //}
-        head->next = tail;
-        tail->prev = head;
-        siz = 0;
+        while (!empty())
+        {
+            pop_front();
+        }
     }
 
     /* front, back, push_front, push_back, pop_front, and pop_back
@@ -240,101 +237,75 @@ public:
     //Inserts an object at the front of the list
     void push_front(const Object& x)
     {
-        siz++;
-        Node a;
-        Node* n = &a;
-        n->data = x;
-        n->next = head->next;
-        n->prev = head;
-        n->next->prev = n;
-        head->next = n;
+        insert(iterator(head->next), x);
     }
 
     //Inserts an object at the back of the list
     void push_back(const Object& x)
     {
-        siz++;
-        Node a;
-        Node* n = &a;
-        n->data = x;
-        n->next = tail;
-        n->prev = tail->prev;
-        n->prev->next = n;
-        tail->prev = n;
+        insert(end(), x);
     }
 
     //Removes the first element in the list
     void pop_front()
     {
-        if (!empty())
-        {
-            siz--;
-            /*Node** temp = &head->next->next;
-            delete head->next;
-            head->next = *temp;
-            head->next->prev = head;
-            siz--;*/
-            head->next = head->next->next;
-            head->next->prev = head;
-        }
+        remove(head->next);
     }
 
     //Removes the last element in the list
     void pop_back()
     {
-        if (!empty())
-        {
-            siz--;
-            tail->prev = tail->prev->prev;
-            tail->prev->next = tail;
-        }
+        remove(tail->prev);
     }
 
     // Insert x before itr.
     iterator insert(iterator itr, const Object& x)
     {
         ++siz;
-        Node* temp;
-        temp->data = x;
-        temp->prev = itr->prev;
-        temp->next = itr;
-        temp->prev->next = temp;
-        itr->prev = temp;
-        return temp;
+        Node* newNode = new Node;
+        newNode->data = x;
+        Node* temp = itr.current->prev;
+        newNode->next = itr.current;
+        itr.current->prev = newNode;
+        temp->next = newNode;
+        newNode->prev = temp;
+        return iterator(newNode);
     }
 
     // Erase item at itr.
     iterator remove(iterator itr)
     {
-        --siz;
-        auto temp = itr->next;
-        itr->next->prev = itr->prev;
-        itr->prev->next = itr->next;
-        //delete itr;
-        //WHAT IS THIS SUPPOSED TO RETURN?!
-        return temp->prev;
+        Node* temp = itr.current->next;
+        if (!empty())
+        {
+            --siz;
+            temp->prev = itr.current->prev;
+            itr.current->prev->next = temp;
+            delete itr.current;
+        }
+        return iterator(temp);
     }
 
     // Return the index of the node containing the matching value
     // Return -1 if no matching value
     int find(const Object& x)
     {
-        /*Node* temp = head;
-        for (int i = 0; i < siz; ++i)
+        Node* temp = head->next;
+        for (int i = 0; i < size(); i++)
         {
             if (temp->data == x)
             {
                 return i;
             }
             temp = temp->next;
-        }*/
+        }
         return -1;
     }
 
 private:
     Node* head;
     Node* tail;
-    int siz;
+    unsigned siz;
 
     void init()
     {

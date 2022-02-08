@@ -17,10 +17,10 @@ public:
     }
     Object& dequeue()
     {
-        //Object temp = theList.back();
-        //theList.pop_back();
-        //return temp
-        return *theList.begin();
+        const Object& temp = theList.back();
+        Object out = temp;
+        theList.pop_back();
+        return out;
     }
 private:
     List<Object> theList;

@@ -17,10 +17,10 @@ public:
     }
     Object& pop()
     {
-        //auto temp = theList.front();
-        //theList.pop_front();
-        //return temp;
-        return *theList.begin();
+        const Object& temp = theList.front();
+        Object out = temp;
+        theList.pop_front();
+        return out;
     }
 private:
     List<Object> theList;
