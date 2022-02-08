@@ -176,25 +176,25 @@ public:
     // Return mutable iterator representing beginning of list.
     iterator begin()
     {
-        return head;
+        return iterator(head->next);
     }
 
     // Return constant iterator representing beginning of list.
     const_iterator begin() const
     {
-        return head;
+        return iterator(head->next);
     }
 
     // Return iterator representing endmarker of list.
     // Mutator version is first, then accessor version.
     iterator end()
     {
-        return tail;
+        return iterator(tail->prev);
     }
 
     const_iterator end() const
     {
-        return tail;
+        return iterator(tail->prev);
     }
 
     // Return number of elements currently in the list.
@@ -312,7 +312,7 @@ public:
         itr->prev->next = itr->next;
         //delete itr;
         //WHAT IS THIS SUPPOSED TO RETURN?!
-        return temp;
+        return temp->prev;
     }
 
     // Return the index of the node containing the matching value
